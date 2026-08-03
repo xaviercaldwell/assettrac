@@ -7,7 +7,7 @@ interface Props{
 
 export default function AssetTable({assets}: Props){
     return (
-        <table>
+        <table className="table-auto w-full text-left">
             <thead>
                 <tr>
                     <th>Asset Tag</th>
