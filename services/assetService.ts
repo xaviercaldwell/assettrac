@@ -51,5 +51,9 @@ export async function getAssets(): Promise<Asset[]> {
 return fakeAssets;
 }
 
+export async function getAssetById(id: number): Promise<Asset | undefined> {
+    return fakeAssets.find(asset => asset.id === id);
+}
+
 //const response await fetch('https://api.example.com/assets');
 //return response.json() as Promise<Asset[]>;

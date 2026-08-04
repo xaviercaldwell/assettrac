@@ -36,7 +36,9 @@ const fakeUsers: User[] = [
 export async function getUsers(): Promise<User[]> {
     return fakeUsers;
 }
-
+export async function getUserById(id:number): Promise<User|undefined>{
+    return fakeUsers.find(user =>user.id === id);
+}
 
 //const response await fetch('https://api.example.com/assets');
 //return response.json() as Promise<Asset[]>;
