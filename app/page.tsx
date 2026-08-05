@@ -1,53 +1,51 @@
-import Image from "next/image";
 import Link from "next/link";
-export default function Home() {
-  return (
-    
-//should go here only if there isn't a session established. 
+import { Button } from "@/components/ui/button";
 
-    <div className="flex flex-col flex-1 items-center justify-center font-sans">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-center gap-32 px-16 ">
-        <div className="flex flex-col gap-6 text-center ">
-          <h1 className="flex flex-row text-5xl font-bold items-center justify-center gap-2">
-            AssetTrac&nbsp;<Image
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
+export default function Home() {
+//later redirect to dashboard if logged in.
+  
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center">
+
+      <main className="flex w-full max-w-3xl flex-col items-center gap-12 px-8 text-center">
+
+        <div className="flex flex-col gap-6">
+
+          <h1 className="text-5xl font-bold">
+            AssetTrac
           </h1>
-          <p className="max-w-md text-lg leading-8">
-            AssetTrac is a comprehensive asset management system designed to help organizations efficiently track, manage, and yap yap yap
-            with even more yappage and yapyap!
+
+          <p className="max-w-md text-lg text-muted-foreground">
+            AssetTrac is a comprehensive asset management system designed to
+            help organizations efficiently track, manage, and maintain their
+            IT assets. YAP YAP YAP YAP YAP and a little bit o yappage and more yap to eat your time away and test long text line to make sure its centered ayyayayay
           </p>
+
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row ">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className=" invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Login
-            </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent bg-foreground text-background hover:bg-[#ccc]  md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Register
-          </a>
+
+
+        <div className="flex flex-col gap-4 mt-4 sm:flex-row">
+
+          <Link href="/login">
+            <Button size="lg">
+              Login
+            </Button>
+          </Link>
+
+
+          <Link href="/register">
+            <Button
+              size="lg"
+              variant="outline"
+            >
+              Register
+            </Button>
+          </Link>
+
         </div>
+
       </main>
+
     </div>
-    
   );
 }

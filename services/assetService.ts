@@ -55,5 +55,41 @@ export async function getAssetById(id: number): Promise<Asset | undefined> {
     return fakeAssets.find(asset => asset.id === id);
 }
 
+export async function updateAsset(
+    id: number,
+    updatedAsset: Asset
+): Promise<Asset | undefined> {
+
+    const index = fakeAssets.findIndex(
+        asset => asset.id === id
+    );
+
+    if(index === -1){
+        return undefined;
+    }
+
+    fakeAssets[index] = updatedAsset;
+
+    return fakeAssets[index];
+}
+
+
+export async function deleteAsset(
+    id:number
+): Promise<boolean>{
+
+    const index = fakeAssets.findIndex(
+        asset => asset.id === id
+    );
+
+    if(index === -1){
+        return false;
+    }
+
+    fakeAssets.splice(index,1);
+
+    return true;
+}
+
 //const response await fetch('https://api.example.com/assets');
 //return response.json() as Promise<Asset[]>;

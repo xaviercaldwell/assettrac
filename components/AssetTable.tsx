@@ -1,28 +1,39 @@
-import AssetRow from './AssetRow';
+import AssetRow from "./AssetRow";
 import { Asset } from "@/types/asset";
 
-interface Props{
-    assets: Asset[];
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+interface Props {
+  assets: Asset[];
 }
 
-export default function AssetTable({assets}: Props){
-    return (
-        <table className="table-auto w-full text-left">
-            <thead>
-                <tr>
-                    <th>Asset Tag</th>
-                    <th>Model</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-            {assets.map(asset => (
-                <AssetRow
-                    key={asset.id}
-                    asset={asset}
-                />
-            ))}
-            </tbody>
-        </table>
-    )
+export default function AssetTable({ assets }: Props) {
+  return (
+    <Table>
+
+      <TableHeader>
+        <tr>
+          <TableHead>Asset Tag</TableHead>
+          <TableHead>Model</TableHead>
+          <TableHead>Status</TableHead>
+        </tr>
+      </TableHeader>
+
+      <TableBody>
+        {assets.map((asset) => (
+          <AssetRow
+            key={asset.id}
+            asset={asset}
+          />
+        ))}
+      </TableBody>
+
+    </Table>
+  );
 }

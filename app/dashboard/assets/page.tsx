@@ -1,14 +1,16 @@
-import React from 'react'
-import {getAssets} from '@/services/assetService';
-import AssetTable from '@/components/AssetTable';
-export default async function assetsPage(){
-    const assets = await getAssets();
+import { getAssets } from "@/services/assetService";
+import AssetTable from "@/components/AssetTable";
 
-    return (
-        <main className="text-black">
-            <h1 className="text-2xl font-bold mb-4">Asset List</h1>
-            <AssetTable assets={assets} />
-        </main> 
-    )
+export default async function AssetsPage() {
+  const assets = await getAssets();
+
+  return (
+    <div>
+      <h1 className="mb-4 text-2xl font-bold">
+        Asset List
+      </h1>
+
+      <AssetTable assets={assets} />
+    </div>
+  );
 }
-  

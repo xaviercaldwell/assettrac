@@ -1,17 +1,30 @@
-import React from 'react'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 function GlobalNav() {
   return (
-    <div className="bg-foreground text-black p-4 border-b border-gray-300 shadow-md z-50">
-      <div className="flex items-center justify-between">
-        <div className="text-xl font-extrabold">AssetTrac</div>
-        <div className="flex gap-4">
-          <button className="bg-indigo-100  px-4 py-2 rounded">Dashboard</button>
-          <button className="bg-indigo-100 px-4 py-2 rounded">Profile</button>
+    <header className="border-b border-gray-500 bg-black text-white z-20">
+      <div className="flex items-center justify-between p-4 px-5 shadow-xl">
+        <Link href="/dashboard" className="text-2xl font-extrabold">
+          AssetTrac
+        </Link>
+
+        <div className="flex gap-3">
+          <Link href="/dashboard">
+          <Button className="cursor-pointer" variant="secondary">
+            Dashboard
+          </Button>
+          </Link>
+
+         <Link href="/profile">
+          <Button className="cursor-pointer"variant="secondary">
+            Profile
+          </Button>
+          </Link>
         </div>
       </div>
-    </div>
-  )
+    </header>
+  );
 }
 
-export default GlobalNav
+export default GlobalNav;
