@@ -1,111 +1,109 @@
 "use client";
 
 import { Asset } from "@/types/asset";
-import { useState } from "react";
+import {updateAsset} from "@/services/assetService";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { updateAsset, deleteAsset } from "@/services/assetService";
+import {getAssetById} from "@/services/assetService";
 
-export default function EditAssetForm({ asset }: { asset: Asset }) {
-  const router = useRouter();
+interface Props{
+  asset: Asset;
+}
 
-  const [formData, setFormData] = useState(asset);
+export default function EditAssetForm({asset}: Props) {
+const router = useRouter();
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    await updateAsset(asset.id, formData);
-
+    const formData = new FormData(event.currentTarget);
+    const updatedAsset = {
+      ...asset,
+      assetTag: formData.get("assetTag") as string,
+      manufacturer: formData.get("manufacturer") as string,
+      model: formData.get("model") as string,
+      serialNumber: formData.get("serialNumber") as string,
+    }
+    await updateAsset(asset.id, updatedAsset);
+    console.log("Asset updated:", updatedAsset);// fake data so its hard to see my changes
+    console.log(getAssetById(asset.id)); //ensure changes were made
     router.push(`/dashboard/assets/${asset.id}`);
-  }
+        }
+  return(
+      <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+        >
 
-  async function handleDelete() {
-    await deleteAsset(asset.id);
+            <div className="space-y-2">
+                <Label htmlFor="assetTag">
+                    Asset Tag
+                </Label>
 
-    router.push("/dashboard/assets");
-  }
+                <Input
+                    id="assetTag"
+                    name="assetTag"
+                    defaultValue={asset.assetTag}
+                />
+            </div>
 
-  return (
-    <div className="relative">
-      <button
-        onClick={handleDelete}
-        className="
-        absolute right-0 top-0
-        bg-red-600 text-white
-        px-4 py-2 rounded
-        "
-      >
-        Delete Asset
-      </button>
 
-      <h1 className="text-2xl font-bold mb-6">Edit Asset</h1>
+            <div className="space-y-2">
+                <Label htmlFor="manufacturer">
+                    Manufacturer
+                </Label>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="assetTag"
-          value={formData.assetTag}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
+                <Input
+                    id="manufacturer"
+                    name="manufacturer"
+                    defaultValue={asset.manufacturer}
+                />
+            </div>
 
-        <input
-          name="manufacturer"
-          value={formData.manufacturer}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
 
-        <input
-          name="model"
-          value={formData.model}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
+            <div className="space-y-2">
+                <Label htmlFor="model">
+                    Model
+                </Label>
 
-        <input
-          name="serialNumber"
-          value={formData.serialNumber}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
+                <Input
+                    id="model"
+                    name="model"
+                    defaultValue={asset.model}
+                />
+            </div>
 
-        <input
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
 
-        <input
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          className="border p-2 rounded w-full"
-        />
+            <div className="space-y-2">
+                <Label htmlFor="serialNumber">
+                    Serial Number
+                </Label>
 
-        <div className="flex gap-3">
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded"
-          >
-            Confirm Changes
-          </button>
+                <Input
+                    id="serialNumber"
+                    name="serialNumber"
+                    defaultValue={asset.serialNumber}
+                />
+            </div>
 
-          <button
-            type="button"
-            onClick={() => router.push(`/dashboard/assets/${asset.id}`)}
-            className="bg-gray-400 text-white px-4 py-2 rounded"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+
+           <div className="flex gap-3">
+
+  <Button type="submit">
+    Save Changes
+  </Button>
+
+  <Link href={`/dashboard/assets/${asset.id}`}>
+    <Button type="button" variant="outline">
+      Cancel
+    </Button>
+  </Link>
+
+</div>
+
+        </form>
+
   );
 }

@@ -1,4 +1,6 @@
 import { getAssetById } from "@/services/assetService";
+import { notFound } from "next/navigation";
+import EditAssetForm from "@/components/EditAssetForm";
 
 export default async function EditAssetPage({
     params,
@@ -10,12 +12,14 @@ export default async function EditAssetPage({
 
     const asset = await getAssetById(Number(id));
 
-
+    if (!asset){
+        notFound();
+    }
     return (
         <div>
             <h1>Edit Asset</h1>
 
-            <p>{asset?.assetTag}</p>
+            <EditAssetForm asset={asset} />
         </div>
     );
 }
