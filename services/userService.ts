@@ -40,5 +40,41 @@ export async function getUserById(id:number): Promise<User|undefined>{
     return fakeUsers.find(user =>user.id === id);
 }
 
+export async function updateUser(
+    id: number,
+    updatedUser: User
+): Promise<User | undefined> {
+
+    const index = fakeUsers.findIndex(
+        user => user.id === id
+    );
+
+    if(index === -1){
+        return undefined;
+    }
+
+    fakeUsers[index] = updatedUser;
+
+    return fakeUsers[index];
+}
+
+
+export async function deleteUser(
+    id:number
+): Promise<boolean>{
+
+    const index = fakeUsers.findIndex(
+        user => user.id === id
+    );
+
+    if(index === -1){
+        return false;
+    }
+
+    fakeUsers.splice(index,1);
+
+    return true;
+}
+
 //const response await fetch('https://api.example.com/assets');
 //return response.json() as Promise<Asset[]>;

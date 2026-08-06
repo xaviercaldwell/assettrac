@@ -1,28 +1,35 @@
 import UserRow from './UserRow';
 import { User } from "@/types/user";
-
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 interface Props{
     users: User[];
 }
 
 export default function UserTable({users}: Props){
     return (
-        <table className="table-auto w-full text-left">
-            <thead>
+        <Table>
+            <TableHeader>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Role</TableHead>
                 </tr>
-            </thead>
-            <tbody>
+            </TableHeader>
+            <TableBody>
+               
             {users.map(user => (
                 <UserRow
                     key={user.id}
                     user={user}
                 />
             ))}
-            </tbody>
-        </table>
+            </TableBody>
+        </Table>
     )
 }

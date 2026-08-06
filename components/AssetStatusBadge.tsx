@@ -16,4 +16,3 @@ export default function AssetStatusBadge({status}: {status: Asset['status']}) {
         <span className={`${badgeColor} inline-block w-3 h-3 rounded-full`} />
     );
 }
-//inline-block w-3 h-3 rounded-full for next to badgecolor to test
