@@ -27,7 +27,7 @@ export default function AssetRow({ asset }: { asset: Asset }) {
       </TableCell>
 
       <TableCell>
-        <AssetStatusBadge status={asset.status} />
+        {asset.status} <AssetStatusBadge status={asset.status}/>
       </TableCell>
 
       <TableCell className="rounded-r-lg">
