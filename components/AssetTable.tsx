@@ -22,22 +22,27 @@ export default function AssetTable({ assets, initialSearch }: Props) {
 useEffect(() => {
   setSearch(initialSearch ?? "");
 }, [initialSearch]);
-  const filteredAssets = assets.filter((asset)=>{
-
-    const searchTerm = search.toLowerCase();
 
 
-    const matchesSearch =
-        asset.assetTag.toLowerCase().includes(searchTerm) ||
-        asset.manufacturer.toLowerCase().includes(searchTerm) ||
-        asset.model.toLowerCase().includes(searchTerm) ||
-        asset.serialNumber.toLowerCase().includes(searchTerm) ||
-        asset.status.toLowerCase().includes(searchTerm);
+  const filteredAssets = assets.filter((asset) => {
+  const searchTerms = search
+    .toLowerCase()
+    .trim()
+    .split(/\s+/);
 
+  const searchableText = `
+    ${asset.assetTag}
+    ${asset.manufacturer}
+    ${asset.model}
+    ${asset.serialNumber}
+    ${asset.status}
+    ${asset.location}
+    ${asset.notes ?? ""}
+  `.toLowerCase();
 
-
-
-    return matchesSearch;
+  return searchTerms.every((term) =>
+    searchableText.includes(term)
+  );
 });
   
   return (

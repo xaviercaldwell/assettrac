@@ -21,7 +21,13 @@ export default async function AssetDetailsPage({
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="">
+          <Link href={`/dashboard/assets/`}>
+            <Button className="cursor-pointer" variant="secondary">Back</Button>
+          </Link>
+        </div>
       <div className="flex items-center justify-between">
+        
         <div>
           <h1 className="text-3xl font-semibold">Asset Details</h1>
 

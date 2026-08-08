@@ -1,14 +1,25 @@
 import React from 'react'
 import {getUsers} from '@/services/userService';
 import UserTable from '@/components/UserTable';
-export default async function usersPage(){
+export const dynamic = "force-dynamic";
+
+
+
+export default async function usersPage({
+    searchParams,
+}: {
+    searchParams: Promise<{search?:string}>
+}) {
+
     const users = await getUsers();
 
+    const {search} = await searchParams;
+
+
     return (
-        <main className="">
-            <h1 className="text-2xl font-bold mb-4">User List</h1>
-            <UserTable users={users} />
-        </main> 
-    )
+        <UserTable
+            users={users}
+            initialSearch={search}
+        />
+    );
 }
-  
