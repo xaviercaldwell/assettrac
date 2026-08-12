@@ -11,15 +11,36 @@ import {getAssetById} from "@/services/assetService";
 import { useState } from "react";
 import { Select, SelectItem, SelectValue, SelectContent, SelectTrigger } from "./ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {User} from "@/types/user";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
 
 interface Props{
   asset: Asset;
+  users: User[];
 }
 
-export default function EditAssetForm({asset}: Props) {
+export default function EditAssetForm({asset, users}: Props) {
 const router = useRouter();
 
+const userOptions = users.map((user) => ({
+  value: user.id,
+  label: `${user.firstName} ${user.lastName}`,
+  user: user,
+}));
+
+
 const [status, setStatus] = useState<Asset["status"]>(asset.status);
+
+const [assignedUser, setAssignedUser] = useState<User | null>(
+  users.find((user) => user.id === asset.assignedUserId) ?? null
+);
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,7 +55,7 @@ const [status, setStatus] = useState<Asset["status"]>(asset.status);
   purchaseDate: formData.get("purchaseDate") as string,
   location: formData.get("location") as string,
   notes: formData.get("notes") as string,
-  assignedUserId: Number(formData.get("assignedUserId")) || undefined,
+  assignedUserId: assignedUser?.id,
   status,
 };
     await updateAsset(asset.id, updatedAsset);
@@ -160,12 +181,41 @@ const [status, setStatus] = useState<Asset["status"]>(asset.status);
     Assigned User
   </Label>
 
-  <Input
-    id="assignedUserId"
-    name="assignedUserId"
-    type="number"
-    defaultValue={asset.assignedUserId}
+  <Combobox
+  items={userOptions}
+  value={
+    assignedUser
+      ? userOptions.find((option) => option.user.id === assignedUser.id)
+      : null
+  }
+  onValueChange={(option) => {
+    setAssignedUser(option?.user ?? null);
+  }}
+  itemToStringValue={(option) => option?.label ?? ""}
+>
+  <ComboboxInput
+    id="assignedUser"
+    placeholder="Select a user"
+    showClear
   />
+
+  <ComboboxContent>
+    <ComboboxEmpty>
+      No users found.
+    </ComboboxEmpty>
+
+  <ComboboxList>
+  {(option) => (
+    <ComboboxItem
+      key={option.value}
+      value={option}
+    >
+      {option.label}
+    </ComboboxItem>
+  )}
+</ComboboxList>
+  </ComboboxContent>
+</Combobox>
 </div>
 
            <div className="flex gap-3">
