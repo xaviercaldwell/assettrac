@@ -9,6 +9,6 @@ public class AssetsController: ControllerBase
     [HttpGet]
     public IActionResult GetAssets()
     {
-        return Ok("hello from API");
+        return Ok("hello from API, ASSETS");
     }
 }
