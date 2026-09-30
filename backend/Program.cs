@@ -19,6 +19,25 @@ builder.Services.AddDbContext<AssetTracDbContext>(options =>
 
 
 var app = builder.Build();
+//testing block to see if i can connect to azure
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AssetTracDbContext>();
+
+    if (await db.Database.CanConnectAsync())
+    {
+        Console.WriteLine("Successfully connected to AssetTrac database!");
+    }
+    else
+    {
+        Console.WriteLine("Could not connect to AssetTrac database.");
+    }
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
