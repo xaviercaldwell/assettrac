@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using assettrac.api.Data;
+using assettrac.api.models;
 
 namespace assettrac.api.Controllers;
 
@@ -21,5 +22,14 @@ public class AssetsController : ControllerBase
         var assets = await _context.Assets.ToListAsync();
 
         return Ok(assets);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateAsset(Asset asset)
+    {
+        _context.Assets.Add(asset);
+
+        await _context.SaveChangesAsync();
+        return Ok(asset);
     }
 }
